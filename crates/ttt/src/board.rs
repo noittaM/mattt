@@ -13,6 +13,27 @@ pub enum Sym {
     Circle,
 }
 
+impl Sym {
+    /// Swaps the held symbol.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use ttt::Sym;
+    /// let mut sym = Sym::Cross;
+    /// sym.swap();
+    /// assert_eq!(sym, Sym::Circle);
+    /// sym.swap();
+    /// assert_eq!(sym, Sym::Cross);
+    /// ```
+    pub fn swap(&mut self) {
+        match self {
+            Sym::Cross => *self = Sym::Circle,
+            Sym::Circle => *self = Sym::Cross,
+        }
+    }
+}
+
 /// Represents the 3x3 grid on which tic-tac-toe is played on.
 ///
 /// Does not provide any additional logic e.g. preventing invalid states.
