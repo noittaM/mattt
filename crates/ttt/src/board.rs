@@ -90,6 +90,12 @@ impl IndexMut<BoardIndex> for Board {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct BoardIndex(u8);
 
+impl Display for BoardIndex {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
 impl TryFrom<u8> for BoardIndex {
     type Error = BoardIndexOutOfBoundsError;
 
