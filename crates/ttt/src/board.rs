@@ -34,6 +34,15 @@ impl Sym {
     }
 }
 
+impl Display for Sym {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Sym::Cross => write!(f, "X"),
+            Sym::Circle => write!(f, "O"),
+        }
+    }
+}
+
 /// Represents the 3x3 grid on which tic-tac-toe is played on.
 ///
 /// Does not provide any additional logic e.g. preventing invalid states.
