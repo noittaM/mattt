@@ -14,15 +14,17 @@ pub enum Sym {
 }
 
 impl Sym {
-    /// Swaps the held symbol.
+    /// Swaps held symbol.
     ///
     /// # Examples
     ///
     /// ```
     /// # use ttt::Sym;
     /// let mut sym = Sym::Cross;
+    ///
     /// sym.swap();
     /// assert_eq!(sym, Sym::Circle);
+    ///
     /// sym.swap();
     /// assert_eq!(sym, Sym::Cross);
     /// ```
@@ -50,7 +52,7 @@ impl Display for Sym {
 pub struct Board([Option<Sym>; 9]);
 
 impl Board {
-    /// Returns a reference to the underlying game grid.
+    /// Returns the underlying game grid.
     #[must_use]
     pub fn get(&self) -> &[Option<Sym>; 9] {
         &self.0
@@ -99,6 +101,33 @@ impl IndexMut<BoardIndex> for Board {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct BoardIndex(u8);
 
+impl BoardIndex {
+    // NOTE: Added these functions to use them in const contexts.
+
+    /// Constructs a new instance of [`BoardIndex`]
+    ///
+    /// # Errors
+    ///
+    /// Returns [`BoardIndexOutOfBoundsError`] if `value` is out of bounds.
+    pub const fn new(value: u8) -> Result<Self, BoardIndexOutOfBoundsError> {
+        if value > 8 {
+            Err(BoardIndexOutOfBoundsError(value))
+        } else {
+            unsafe { Ok(Self::new_unchecked(value)) }
+        }
+    }
+
+    /// Constructs a new instance of [`BoardIndex`] without performing the bounds check.
+    ///
+    /// # Safety
+    ///
+    /// If `val` is an invalid index, indexing [`Board`] will panic.
+    #[must_use]
+    pub const unsafe fn new_unchecked(value: u8) -> Self {
+        Self(value)
+    }
+}
+
 impl Display for BoardIndex {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{}", self.0)
@@ -123,7 +152,7 @@ impl From<BoardIndex> for u8 {
     }
 }
 
-/// An Error emitted when attempting to perform an invalid [`BoardIndex`] conversion.
+/// Error emitted when attempting to perform an invalid [`BoardIndex`] conversion.
 #[derive(Debug, Clone)]
 pub struct BoardIndexOutOfBoundsError(u8);
 
