@@ -39,6 +39,7 @@ impl Game {
     }
 
     /// Returns the player who won the game if it has finished. Otherwise, returns `None`.
+    #[must_use]
     pub fn has_winner(&self) -> Option<Sym> {
         // FIXME: A macro would go hard here, mayhaps.
         const LINES: [[BoardIndex; 3]; 8] = unsafe {
@@ -75,7 +76,7 @@ impl Game {
                     BoardIndex::new_unchecked(5),
                     BoardIndex::new_unchecked(8),
                 ],
-                //The two diagonals:
+                // The two diagonals:
                 [
                     BoardIndex::new_unchecked(0),
                     BoardIndex::new_unchecked(4),
@@ -105,54 +106,6 @@ impl Game {
 
         None
     }
-
-    // Get winner or None if match is not over
-    // #[must_use]
-    // pub fn game_over(&self) -> Option<Sym> {
-    //     // FIXME: WHAT THE FUCK
-    //     let board: &[bool] = &self.board.get().map(|x| match x {
-    //         Some(s) => match s {
-    //             Sym::Circle => true,
-    //             Sym::Cross => false,
-    //         },
-    //         None => false,
-    //     });
-    //
-    //     let a = self.board[0u8.try_into().unwrap()];
-    //
-    //     if (board[0] && board[1] && board[2])
-    //         || (board[3] && board[4] && board[5])
-    //         || (board[6] && board[7] && board[8])
-    //         || (board[0] && board[3] && board[6])
-    //         || (board[1] && board[4] && board[7])
-    //         || (board[2] && board[5] && board[8])
-    //         || (board[0] && board[4] && board[8])
-    //         || (board[2] && board[4] && board[6])
-    //     {
-    //         return Some(Sym::Circle);
-    //     }
-    //
-    //     let board: &[bool] = &self.board.get().map(|x| match x {
-    //         Some(s) => match s {
-    //             Sym::Circle => false,
-    //             Sym::Cross => true,
-    //         },
-    //         None => false,
-    //     });
-    //
-    //     if (board[0] && board[1] && board[2])
-    //         || (board[3] && board[4] && board[5])
-    //         || (board[6] && board[7] && board[8])
-    //         || (board[0] && board[3] && board[6])
-    //         || (board[1] && board[4] && board[7])
-    //         || (board[2] && board[5] && board[8])
-    //         || (board[0] && board[4] && board[8])
-    //         || (board[2] && board[4] && board[6])
-    //     {
-    //         return Some(Sym::Cross);
-    //     }
-    //     None
-    // }
 }
 
 // FIXME: Should this function really go here?

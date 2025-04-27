@@ -7,7 +7,7 @@ fn main() {
     let mut game = Game::default();
     loop {
         println!("{game}");
-        if let Some(winner) = game.game_over() {
+        if let Some(winner) = game.has_winner() {
             println!("Game over, {winner} wins!");
             return;
         }
